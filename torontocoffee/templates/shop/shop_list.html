@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block head_title %}Coffee Shops! | {{ block.super}}{% endblock head_title %}
+
+{% block content %}
+<h1>Shop list</h1>
+
+<ul>
+{% for obj in object_list %}
+<!--<li><a href='{% url "shop:detail" slug=obj.slug %}'>{{ obj }}</a><br/> both work-->
+<li><a href='{{ obj.get_absolute_url }}'>{{ obj }}</a><br/>
+    {{ obj.name }} {{ obj.location }} {{ obj.timestamp }}</li>
+{% endfor %}
+</ul>
+{% endblock %}

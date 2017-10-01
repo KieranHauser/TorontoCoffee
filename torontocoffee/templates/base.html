@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang=en>
+
+<head>
+<title>{% block head_title %}Toronto Coffee Lovers{% endblock head_title %}</title>
+{% include 'snippets/css.html' %}
+</head>
+<body>
+<div class='container'>
+<h1> Toronto Coffee Lovers </h1>
+
+{% block content %}{% endblock content %}
+</div>
+
+
+{% include 'snippets/js.html' %}
+</body>
+</html>
