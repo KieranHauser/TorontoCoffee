@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block head_title %}Coffee Shop Details!! | {{ block.super}}{% endblock head_title %}
+
+{% block content %}
+<h1>{{ object.title }}</h1>
+<p>{{ object.location }}</p>
+<p>{{ object.description }}</p>
+<p>{{ object.timestamp }}</p>
+{% endblock %}
