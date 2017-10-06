@@ -21,7 +21,7 @@ from authentification.views import RegisterView, ProfileFollowToggle, activate_u
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^$', TemplateView.as_view(template_name='base.html')),
+    url(r'^$', TemplateView.as_view(template_name='base.html'), name='home'),
     url(r'^register/$', RegisterView.as_view(), name='register'),
     url(r'^activate/(?P<code>[a-z0-9].*)/$', activate_user_view, name='activate'),
     url(r'^login/$', LoginView.as_view(), name='login'),
