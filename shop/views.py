@@ -1,16 +1,20 @@
 from django.shortcuts import render
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q
 from django.views.generic import CreateView, DetailView, ListView
 from .forms import ShopForm
 from .models import Shop
 # Create your views here.
 
-class ShopCreateView(CreateView):
+
+class ShopCreateView(LoginRequiredMixin, CreateView):
     """Renders create view of a given Shop"""
     form_class = ShopForm
     template_name = 'snippets/form-snippet.html'
 
     def form_valid(self, form):
+        """Validates the form
+        """
         return super(ShopCreateView, self).form_valid(form)
 
 

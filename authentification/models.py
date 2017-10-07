@@ -33,7 +33,7 @@ class Profile(models.Model):
     user = models.OneToOneField(User)
     followers = models.ManyToManyField(User, related_name='is_following', blank=True)
     activation_key = models.CharField(max_length=120, blank=True, null=True)
-    activated = models.BooleanField(default=True)
+    activated = models.BooleanField(default=False)
     timestamp = models.DateField(auto_now_add=True)
 
     objects = ProfileManager()
@@ -56,12 +56,18 @@ class Profile(models.Model):
             sent_mail = False
             return sent_mail
 
+    def get_absolute_url(self):
+        """Gives the url of the Profile model
+        :rtype: url
+        """
+        return reverse('authentification:detail', kwargs={'user': self.user})
+
     def activate(self):
         """Activates account
         """
         if not self.activated:
             qs = Profile.objects.all()
-            profile = qs.first().order_by('-timestamp')
+            profile = qs.order_by('-timestamp').first()
             user_ = profile.user
             user_.is_active = True
             user_.save()
