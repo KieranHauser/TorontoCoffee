@@ -5,6 +5,8 @@ from .utils import unique_slug_generator
 from django.core.urlresolvers import reverse
 # Create your models here.
 
+User = settings.AUTH_USER_MODEL
+
 
 def upload_location(instance, filename):
     """Returns the path to upload the file to"""
@@ -18,6 +20,7 @@ class Shop(models.Model):
     name = models.CharField(max_length=120)
     location = models.CharField(max_length=120)
     description = models.CharField(max_length=255, blank=True)
+    favorited = models.ManyToManyField(User, related_name='favorited_by')
     image = models.ImageField(upload_to=upload_location, null=True, blank=True,
                               width_field='width_field', height_field='height_field')
     width_field = models.IntegerField(default=0)

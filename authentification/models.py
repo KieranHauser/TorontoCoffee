@@ -5,6 +5,7 @@ from django.db.models.signals import post_save
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 from .utils import code_generator
+from shop.models import Shop
 # Create your models here.
 
 User = settings.AUTH_USER_MODEL
@@ -26,12 +27,26 @@ class ProfileManager(models.Manager):
             is_following = True
         return profile_, is_following
 
+    def toggle_favorite(self, requested_user, shop_to_toggle):
+        """Toggles favourites for shops
+        """
+        user = requested_user
+        shop_ = Shop.objects.get(name=shop_to_toggle)
+        favorited_by = False
+        if user in shop_.favorited.all():
+            shop_.favorited.remove(user)
+        else:
+            shop_.favorited.add(user)
+            favorited_by = True
+        return shop_, favorited_by
+
 
 class Profile(models.Model):
     """The Profile model where users can vote, favourite and review coffeeshops.
     """
     user = models.OneToOneField(User)
     followers = models.ManyToManyField(User, related_name='is_following', blank=True)
+    favorites = models.ManyToManyField(Shop, related_name='favorited_by')
     activation_key = models.CharField(max_length=120, blank=True, null=True)
     activated = models.BooleanField(default=False)
     timestamp = models.DateField(auto_now_add=True)
